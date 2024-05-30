@@ -1,3 +1,4 @@
+import Cart from "./Cart";
 import NavBar from "./NavBar";
 import Search from "./Search";
 
@@ -7,7 +8,7 @@ export default function Header() {
             <div>
                 <h1>Cart React</h1>
                 <Search />
-                <button>Mi Carrito</button>
+                <Cart />
             </div>
             <NavBar />
         </header>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useNavegation } from "../../hooks/useNavegation"
 
 export default function Products() {
@@ -12,15 +13,17 @@ export default function Products() {
             {
                 ((listaFiltrada.length > 0) ?
                     listaFiltrada.map(producto => (
-                        <li key={producto.id} style={{ listStyle: "none" }}>
-                            <img src={producto.thumbnail} alt={producto.title} />
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <p>{producto.title}</p>
-                                <p>{producto.rating}</p>
-                                <p>{producto.brand}</p>
-                                <p>{producto.price}</p>
-                            </div>
-                        </li>
+                        <Link key={producto.id} to={`/detalle-del-producto/${producto.id}`}>
+                            <li style={{ listStyle: "none" }}>
+                                <img src={producto.thumbnail} alt={producto.title} />
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                    <p>{producto.title}</p>
+                                    <p>{producto.rating}</p>
+                                    <p>{producto.brand}</p>
+                                    <p>{producto.price}</p>
+                                </div>
+                            </li>
+                        </Link>
                     ))
                     : "nop")
             }
