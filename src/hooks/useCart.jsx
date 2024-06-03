@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { CartContext } from "../constext/cart"
 
 export function useCart() {
@@ -17,7 +17,6 @@ export function useCart() {
 
         return setCartList(prevList => ([...prevList, { ...productToAdd, quantity: parseInt(chosenStock) }]));
     };
-
 
     const resetCart = () => {
         return setCartList([]);

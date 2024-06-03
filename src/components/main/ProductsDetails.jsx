@@ -1,6 +1,7 @@
 import { useProductDetail } from "../../hooks/useProductDetail";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useCart } from "../../hooks/useCart";
+import "../../css/product-details.css"
 
 export default function ProductsDetails() {
     const productoUnico = useProductDetail();
@@ -19,21 +20,21 @@ export default function ProductsDetails() {
 
     return (
         <>
-            <section style={{ display: "flex", justifyContent: "space-between", gap: "15px" }}>
+            <section className="product-detail-index">
                 <img src={productoUnico.thumbnail} alt={productoUnico.title} />
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span>Nuevo | +{productosVendidos} vendidos.</span>
-                    <span>{productoUnico.title}</span>
-                    <span>{productoUnico.description}</span>
-                    <span>rating {productoUnico.rating}</span>
-                    <span>${productoUnico.price}</span>
+                <div>
+                    <span className="productos-vendidos-product-detail">Nuevo | +{productosVendidos} vendidos.</span>
+                    <span className="title-product-detail">{productoUnico.title}</span>
+                    <span className="descripcion-product-detail">{productoUnico.description}</span>
+                    <span className="rating-product-detail">✧{productoUnico.rating}</span>
+                    <span className="price-product-detail">${productoUnico.price}</span>
                 </div>
-                <form style={{ display: "flex", flexDirection: "column" }}>
-                    <span>brand {productoUnico.brand}</span>
-                    <span>category {productoUnico.category}</span>
+                <form>
+                    <span className="form-text-product-detail">Brand: {productoUnico.brand}</span>
+                    <span className="form-text-product-detail">Category: {productoUnico.category}</span>
 
-                    <span>Stock: {productoUnico.stock}</span>
-                    <label>Cantidad</label>
+                    <span className="form-text-product-detail">Stock: {productoUnico.stock}</span>
+                    <label className="form-text-product-detail">Cantidad: </label>
                     <select onChange={handleChangeStock}>
                         {opcionesStock.map((cantidad, index) => (
                             <option key={index} value={cantidad}>{cantidad}</option>

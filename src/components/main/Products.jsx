@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom"
 import { useNavegation } from "../../hooks/useNavegation"
+import "../../css/products.css"
 
 export default function Products() {
     const { titleHome, listaFiltrada } = useNavegation()
 
     return (<>
 
-        <h3>
-            {(titleHome) ? titleHome : "Todos nuestros Productos"}
-        </h3>
-        <ul style={{ width: "100%", maxWidth: "800px", main: "100%", listStyle: "none", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px,1fr))", gap: "10px" }}>
+        <span className="title-products">{(titleHome) ? titleHome : "Todos nuestros Productos"}</span>
+
+        <ul className="ul-products">
             {
                 ((listaFiltrada.length > 0) ?
                     listaFiltrada.map(producto => (
-                        <Link key={producto.id} to={`/detalle-del-producto/${producto.id}`}>
+                        <Link className="products-link" key={producto.id} to={`/detalle-del-producto/${producto.id}`}>
                             <li style={{ listStyle: "none" }}>
                                 <img src={producto.thumbnail} alt={producto.title} />
                                 <div style={{ display: "flex", flexDirection: "column" }}>
-                                    <p>{producto.title}</p>
-                                    <p>{producto.rating}</p>
-                                    <p>{producto.brand}</p>
-                                    <p>{producto.price}</p>
+                                    <span className="title-products">{producto.title}</span>
+                                    <span className="rating-products">☆{producto.rating}☆</span>
+                                    <span className="brand-products">Producto de {producto.brand}</span>
+                                    <span className="price-products">${producto.price}</span>
                                 </div>
                             </li>
                         </Link>
