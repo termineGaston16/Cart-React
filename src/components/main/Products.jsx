@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom"
 import { useNavegation } from "../../hooks/useNavegation"
 import "../../css/products.css"
+import { useEffect } from "react"
 
 export default function Products() {
     const { titleHome, listaFiltrada } = useNavegation()
+
+    useEffect(() => { titleHome ? document.title = `${titleHome} | Cart React` : document.title = `Home | Cart React` }, [titleHome])
+
 
     return (<>
 
@@ -25,7 +29,7 @@ export default function Products() {
                             </li>
                         </Link>
                     ))
-                    : "nop")
+                    : <span className="title-products">Productos no encontrados</span>)
             }
         </ul>
 

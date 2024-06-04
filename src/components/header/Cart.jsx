@@ -6,13 +6,15 @@ import { CartContext } from "../../constext/cart";
 export default function Cart() {
 
     const [cartIsChecked, setCartIsChecked] = useState(false)
-    const { cartList, resetCart, modifyQuantity, cancelThisProduct } = useCart()
+    const { cartList, resetCart, modifyQuantity, cancelThisProduct, buyProducts } = useCart()
     const { wearing } = useContext(CartContext)
 
     const handleClick = () => {
         setCartIsChecked(!cartIsChecked)
         wearing()
     }
+
+    document.title = cartList.length > 0 ? `(${cartList.length}) Your Cart | Cart React` : "Your Cart | Cart React";
 
     return (<>
 
@@ -70,7 +72,7 @@ export default function Cart() {
                         ))}
                     </ul>
                     <button className="cart-inside-btn" onClick={() => resetCart()}>Clear Cart</button>
-                    <button className="cart-inside-btn">Finalizar compra</button>
+                    <button className="cart-inside-btn" onClick={() => buyProducts()}>Finalizar compra</button>
                 </div>
             ) : (
                 <div className="cart-inside-empty">

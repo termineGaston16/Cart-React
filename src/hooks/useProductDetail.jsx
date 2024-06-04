@@ -14,7 +14,7 @@ export function useProductDetail() {
 
     useEffect(() => {
         setProductoUnico(getProductById(idProductDetail))
-    }, [idProductDetail])
+    }, [idProductDetail, listProducts])
 
     return productoUnico;
 }

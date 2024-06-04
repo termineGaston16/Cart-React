@@ -1,6 +1,5 @@
 .product-detail-index{
     margin-top: 3%;
-
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -10,10 +9,12 @@
 }
 
 .product-detail-index img{
-    aspect-ratio: 10/9;
+    width: 30%;
+    aspect-ratio: 12/9;
 }
 
 .product-detail-index div{
+    width: 40%;
     height: 100%;
     display: flex;
     text-align: center;
@@ -51,6 +52,7 @@
 }
 
 .product-detail-index form{
+    width: 20%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -82,4 +84,21 @@
 
 .product-detail-index form button:hover{
     transform: scale(1.1);
+}
+
+@media (max-width: 800px) {
+
+    .product-detail-index{
+        gap: 2rem;
+        padding: 5%;
+    }
+
+    .product-detail-index img, .product-detail-index div, .product-detail-index form{
+        width: 50%;
+    }
+
+    .product-detail-index img{
+        width: 50%;
+        aspect-ratio: 2/2;
+    }
 }

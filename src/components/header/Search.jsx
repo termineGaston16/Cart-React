@@ -13,8 +13,11 @@ export default function Search() {
         event.preventDefault();
         const query = new window.FormData(event.target).get("inputSearchIndex")
         setSearch(query)
+        document.title = `${query} | search... | Cart React`
         if (query) navigate(`/buscar/${query}`);
     }
+
+
 
     return (
         <form onSubmit={handleSubmit} className="search-header-form">

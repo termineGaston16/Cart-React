@@ -1,12 +1,12 @@
 import { useProductDetail } from "../../hooks/useProductDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../../hooks/useCart";
 import "../../css/product-details.css"
 
 export default function ProductsDetails() {
     const productoUnico = useProductDetail();
     const [cantStock, setCantStock] = useState(1)
-    const { addToCart } = useCart();
+    const { addToCart, buyOnlyProduct, acceptedPurchase } = useCart();
     const [productosVendidos, setProductosVendidos] = useState((Math.floor(Math.random() * 801) + 100));
 
     const opcionesStock = [];
@@ -17,6 +17,13 @@ export default function ProductsDetails() {
     const handleChangeStock = (event) => {
         setCantStock(event.target.value)
     };
+
+    const handleComprarAhora = ()=>{
+        buyOnlyProduct(productoUnico, cantStock)
+        setCantStock(1)
+    }
+
+    useEffect(()=>{document.title = `${productoUnico.title} | Cart React`},[productoUnico])
 
     return (
         <>
@@ -35,13 +42,21 @@ export default function ProductsDetails() {
 
                     <span className="form-text-product-detail">Stock: {productoUnico.stock}</span>
                     <label className="form-text-product-detail">Cantidad: </label>
-                    <select onChange={handleChangeStock}>
-                        {opcionesStock.map((cantidad, index) => (
-                            <option key={index} value={cantidad}>{cantidad}</option>
-                        ))}
-                    </select>
+                    {
+                        acceptedPurchase ? (
+                            opcionesStock.length > 0 ? (
+                                <select onChange={handleChangeStock}>
+                                    {opcionesStock.map((cantidad, index) => (
+                                        <option key={index} value={cantidad}>{cantidad}</option>
+                                    ))}
+                                </select>
+                            ) : ("no hay más cantidades")
+                        ) : (
+                            "no hay más cantidades"
+                        )
+                    }
 
-                    <button type="button">Comprar ahora</button>
+                    <button type="button" onClick={handleComprarAhora}>Comprar ahora</button>
                     <button type="button" onClick={() => addToCart(productoUnico, cantStock)}>Agregar al Carrito</button>
                 </form>
             </section>
