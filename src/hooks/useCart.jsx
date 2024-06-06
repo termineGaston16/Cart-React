@@ -1,9 +1,12 @@
 import { useContext, useState } from "react"
 import { CartContext } from "../constext/cart"
 import { ProductContext } from "../constext/product";
+import { addOrder } from "../firebase/firebase"
+import { PerfilContext } from "../constext/perfil";
 
 export function useCart() {
 
+    const {perfil} = useContext(PerfilContext)
     const { cartList, setCartList } = useContext(CartContext)
     const { listProducts, setListProducts } = useContext(ProductContext)
     const [acceptedPurchase, setAcceptedPurchase] = useState(true)
@@ -66,15 +69,19 @@ export function useCart() {
         const newList = structuredClone(listProducts)
         newList[indexProductToBuy].stock -= parseInt(chosenStock)
 
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "¡Producto comprado!",
-            showConfirmButton: false,
-            timer: 1000
-        });
-
         setAcceptedPurchase(true)
+        addOrder({productToBuy, perfil}).then(id =>
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `¡Producto comprado!`,
+                footer: `<p>Cart React Company no se hace responsable de los efectos secundarios que puede generar consumir el producto con el id: ${id}</p>`,
+                showConfirmButton: false,
+                timer: 1000
+            }));
+
+
         return setListProducts(newList)
 
     }
@@ -83,7 +90,7 @@ export function useCart() {
         if (cartList.length === 0) return;
 
         const acceptedAmount = cartList.some(producto => producto.quantity > producto.stock)
-        
+
         if (acceptedAmount) {
             setAcceptedPurchase(false);
             Swal.fire({
@@ -109,13 +116,16 @@ export function useCart() {
         setAcceptedPurchase(true)
         setListProducts(newList);
 
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "¡Compra realizada! Gracias!",
-            showConfirmButton: false,
-            timer: 2000
-        });
+        addOrder({cartList, perfil}).then(id =>
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "¡Compra realizada! Gracias!",
+                footer: `<p>Cart React Company no se hace responsable de los efectos secundarios que puede generar consumir los productos.</p>`,
+                showConfirmButton: false,
+                timer: 2000
+            })
+        );
 
         return resetCart();
     }

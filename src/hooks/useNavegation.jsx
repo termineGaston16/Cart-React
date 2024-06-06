@@ -15,7 +15,7 @@ export function useNavegation() {
     useEffect(() => {
         setTitleHome(idProductCategory)
         setListaFiltrada(fitrarLista(listProducts, idProductCategory, search))
-    }, [idProductCategory, filtro, search])
+    }, [idProductCategory, filtro, search, listProducts])
 
     return { titleHome, listaFiltrada }
 }

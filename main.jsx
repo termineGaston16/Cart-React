@@ -5,15 +5,18 @@ import { FiltersProvider } from "./src/constext/filters";
 import { SearchProvider } from "./src/constext/search";
 import { CartProvider } from "./src/constext/cart";
 import { ProductProvider } from "./src/constext/product";
+import { PerfilProvider } from "./src/constext/perfil";
 
 const root = createRoot(document.getElementById("app")).render(
-    <ProductProvider>
-        <FiltersProvider>
-            <SearchProvider>
-                <CartProvider>
-                    <App />
-                </CartProvider>
-            </SearchProvider>
-        </FiltersProvider>
-    </ProductProvider>
+    <PerfilProvider>
+        <ProductProvider>
+            <FiltersProvider>
+                <SearchProvider>
+                    <CartProvider>
+                        <App />
+                    </CartProvider>
+                </SearchProvider>
+            </FiltersProvider>
+        </ProductProvider>
+    </PerfilProvider>
 )
