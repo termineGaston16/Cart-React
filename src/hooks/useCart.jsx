@@ -6,7 +6,7 @@ import { PerfilContext } from "../constext/perfil";
 
 export function useCart() {
 
-    const {perfil} = useContext(PerfilContext)
+    const { perfil } = useContext(PerfilContext)
     const { cartList, setCartList } = useContext(CartContext)
     const { listProducts, setListProducts } = useContext(ProductContext)
     const [acceptedPurchase, setAcceptedPurchase] = useState(true)
@@ -70,13 +70,15 @@ export function useCart() {
         newList[indexProductToBuy].stock -= parseInt(chosenStock)
 
         setAcceptedPurchase(true)
-        addOrder({productToBuy, perfil}).then(id =>
+        const fechaActual = new Date();
+        const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
+        addOrder({ productToBuy, perfil }).then(id =>
 
             Swal.fire({
                 position: "center",
                 icon: "success",
                 title: `¡Producto comprado!`,
-                footer: `<p>Cart React Company no se hace responsable de los efectos secundarios que puede generar consumir el producto con el id: ${id}</p>`,
+                footer: `<p>Cart React Company no se hace responsable de los efectos secundarios que puede generar consumir el producto con el id: ${id} - Fecha: ${fechaFormateada}</p>`,
                 showConfirmButton: false,
                 timer: 1000
             }));
@@ -115,13 +117,15 @@ export function useCart() {
 
         setAcceptedPurchase(true)
         setListProducts(newList);
+        const fechaActual = new Date();
+        const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
 
-        addOrder({cartList, perfil}).then(id =>
+        addOrder({ cartList, perfil }).then(id =>
             Swal.fire({
                 position: "center",
                 icon: "success",
                 title: "¡Compra realizada! Gracias!",
-                footer: `<p>Cart React Company no se hace responsable de los efectos secundarios que puede generar consumir los productos.</p>`,
+                footer: `<p>Cart React Company no se hace responsable de los efectos secundarios que puede generar consumir los productos. - Fecha: ${fechaFormateada}</p>`,
                 showConfirmButton: false,
                 timer: 2000
             })
@@ -130,5 +134,18 @@ export function useCart() {
         return resetCart();
     }
 
-    return { cartList, acceptedPurchase, addToCart, resetCart, modifyQuantity, cancelThisProduct, buyOnlyProduct, buyProducts }
+    const priceTotal = () => {
+        return cartList.reduce((total, producto) => {
+            return total + producto.price;
+        }, 0);
+    };
+
+    const allQuantity =()=>{
+        return cartList.reduce((total, producto) => {
+            return total + producto.quantity;
+        }, 0);
+    }
+
+
+    return { cartList, acceptedPurchase, addToCart, resetCart, modifyQuantity, cancelThisProduct, buyOnlyProduct, buyProducts, priceTotal, allQuantity }
 }

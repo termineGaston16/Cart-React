@@ -6,7 +6,7 @@ import { CartContext } from "../../constext/cart";
 export default function Cart() {
 
     const [cartIsChecked, setCartIsChecked] = useState(false)
-    const { cartList, resetCart, modifyQuantity, cancelThisProduct, buyProducts } = useCart()
+    const { cartList, resetCart, modifyQuantity, cancelThisProduct, buyProducts, priceTotal, allQuantity } = useCart()
     const { wearing } = useContext(CartContext)
 
     const handleClick = () => {
@@ -32,7 +32,7 @@ export default function Cart() {
                         <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753" />
                     </svg>
                 </button>
-                <span>Tu carrito</span>
+                <span>Tu carrito - ({allQuantity()})</span>
             </header>
 
             <div className="separator"></div>
@@ -71,6 +71,7 @@ export default function Cart() {
                             </li>
                         ))}
                     </ul>
+                    <span style={{fontSize:"2rem"}}>Total: {priceTotal()}</span>
                     <button className="cart-inside-btn" onClick={() => resetCart()}>Clear Cart</button>
                     <button className="cart-inside-btn" onClick={() => buyProducts()}>Finalizar compra</button>
                 </div>

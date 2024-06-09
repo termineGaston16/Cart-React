@@ -4,9 +4,10 @@ import { CartContext } from "../../constext/cart";
 import { PerfilContext } from "../../constext/perfil"
 
 export default function PerfilData() {
-    const { perfil, setPerfil } = useContext(PerfilContext)
+    const { setPerfil } = useContext(PerfilContext)
     const { idNameFormPerfil } = useId();
     const { idEmailFormPerfil } = useId();
+    const { id2EmailFormPerfil } = useId();
     const { idPhoneFormPerfil } = useId();
     const { setWearingCart } = useContext(CartContext);
     const [perfilLogged, setPerfilLogged] = useState(false)
@@ -17,10 +18,8 @@ export default function PerfilData() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const { idNamePerfilData, idEmailPerfilData, idPhonePerfilData } = Object.fromEntries(new window.FormData(event.target))
-        setPerfil({ name: idNamePerfilData, email: idEmailPerfilData, phone: idPhonePerfilData })
-
-        if (idNamePerfilData === "" || idEmailPerfilData === "" || idPhonePerfilData === "") {
+        const { idNamePerfilData, idEmailPerfilData, idPhonePerfilData, id2EmailPerfilData } = Object.fromEntries(new window.FormData(event.target))
+        if (idNamePerfilData === "" || idEmailPerfilData === "" || idPhonePerfilData === "" || id2EmailPerfilData === "") {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -28,6 +27,17 @@ export default function PerfilData() {
             });
             return;
         }
+
+        if (idEmailPerfilData !== id2EmailPerfilData) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El correo no coincide.",
+            });
+            return;
+        }
+
+        setPerfil({ name: idNamePerfilData, email: idEmailPerfilData, phone: idPhonePerfilData })
         setPerfilLogged(true)
         setWearingCart(false)
     }
@@ -41,6 +51,9 @@ export default function PerfilData() {
 
                     <label htmlFor={idEmailFormPerfil}>Ingresa tu correo electrónico</label>
                     <input type="email" name="idEmailPerfilData" id={idEmailFormPerfil} />
+
+                    <label htmlFor={id2EmailFormPerfil}>Re-Ingresa tu correo electrónico</label>
+                    <input type="email" name="id2EmailPerfilData" id={id2EmailFormPerfil} />
 
                     <label htmlFor={idPhoneFormPerfil}>Ingresa tu número de telefono</label>
                     <input type="text" name="idPhonePerfilData" id={idPhoneFormPerfil} />
